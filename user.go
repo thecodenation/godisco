@@ -143,7 +143,7 @@ func GetUsers(req Requester, flag string, order string, ascending bool, page int
 		return nil, err
 	}
 	var u []user
-
+	userInfo = &UserResponse{}
 	err = json.Unmarshal(body, &u)
 	userInfo.Users = u
 	return userInfo, err

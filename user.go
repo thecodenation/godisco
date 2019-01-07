@@ -35,14 +35,7 @@ type UserResponse struct {
 		Name  string `json:"name"`
 		Order int    `json:"sort_order"`
 	} `json:"badge_types,omitempty"`
-	Users []struct {
-		ID        int    `json:"id"`
-		Username  string `json:"username"`
-		Avatar    string `json:"avatar_template"`
-		Name      string `json:"name"`
-		Moderator bool   `json:"moderator"`
-		Admin     bool   `json:"admin"`
-	} `json:"users,omitempty"`
+	Users     []user   `json:"users,omitempty"`
 	User      UserInfo `json:"user"`
 	Errors    []string `json:"errors,omitempty"`
 	ErrorType string   `json:"error_type,omitempty"`
@@ -94,12 +87,15 @@ type UserInfo struct {
 }
 
 type user struct {
-	Name     string `json:"name"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Active   bool   `json:"active"`
-	Approved bool   `json:"approved"`
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	Username  string `json:"username"`
+	Avatar    string `json:"avatar_template"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
+	Active    bool   `json:"active"`
+	Approved  bool   `json:"approved"`
+	Moderator bool   `json:"moderator"`
 }
 
 type invite struct {
@@ -137,7 +133,7 @@ func GetUser(req Requester, user string) (userInfo *UserResponse, err error) {
 }
 
 //GetUsers send a request for information about all users
-func GetUsers(req Requester, flag string, order string, ascending bool, page int, show_emails bool) (userInfo []*UserResponse, err error) {
+func GetUsers(req Requester, flag string, order string, ascending bool, page int, show_emails bool) (userInfo *UserResponse, err error) {
 	if flag == "" {
 		flag = "active"
 	}
@@ -146,7 +142,10 @@ func GetUsers(req Requester, flag string, order string, ascending bool, page int
 	if err != nil {
 		return nil, err
 	}
-	err = json.Unmarshal(body, &userInfo)
+	var u []user
+
+	err = json.Unmarshal(body, &u)
+	userInfo.Users = u
 	return userInfo, err
 }
 

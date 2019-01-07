@@ -35,7 +35,7 @@ type UserResponse struct {
 		Name  string `json:"name"`
 		Order int    `json:"sort_order"`
 	} `json:"badge_types,omitempty"`
-	Users     []user   `json:"users,omitempty"`
+	Users     []*user  `json:"users,omitempty"`
 	User      UserInfo `json:"user"`
 	Errors    []string `json:"errors,omitempty"`
 	ErrorType string   `json:"error_type,omitempty"`
@@ -142,7 +142,7 @@ func GetUsers(req Requester, flag string, order string, ascending bool, page int
 	if err != nil {
 		return nil, err
 	}
-	var u []user
+	var u []*user
 	userInfo = &UserResponse{}
 	err = json.Unmarshal(body, &u)
 	userInfo.Users = u

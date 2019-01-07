@@ -50,6 +50,7 @@ func (c *Client) Get(resource string) ([]byte, int, error) {
 	apiAuth.Set("api_key", c.key)
 	apiAuth.Add("api_username", c.user)
 	url := fmt.Sprintf("%s%s?%s", c.domain, resource, apiAuth.Encode())
+	fmt.Println(url)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, 0, err

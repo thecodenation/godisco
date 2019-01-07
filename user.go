@@ -138,12 +138,14 @@ func GetUsers(req Requester, flag string, order string, ascending bool, page int
 		flag = "active"
 	}
 	endpoint := fmt.Sprintf("/admin/users/list/%s.json", flag)
+	fmt.Println(endpoint)
 	body, _, err := req.Get(endpoint)
 	if err != nil {
 		return nil, err
 	}
 	var u []*user
 	userInfo = &UserResponse{}
+	fmt.Println(string(body))
 	err = json.Unmarshal(body, &u)
 	userInfo.Users = u
 	return userInfo, err

@@ -46,7 +46,10 @@ func NewClient(ClientEndpoint string, ClientKey string, ClientUser string) (*Cli
 
 // Get resource string
 func (c *Client) Get(resource string) ([]byte, int, error) {
-	url := fmt.Sprintf("%s%s", c.domain, resource)
+	apiAuth := url.Values{}
+	apiAuth.Set("api_key", c.key)
+	apiAuth.Add("api_username", c.user)
+	url := fmt.Sprintf("%s%s?%s", c.domain, resource, apiAuth.Encode())
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, 0, err

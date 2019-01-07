@@ -13,6 +13,7 @@ import (
 type Requester interface {
 	do(*http.Request) ([]byte, int, error)
 	Get(string) ([]byte, int, error)
+	GetAsAdmin(string) ([]byte, int, error)
 	Post(string, []byte) ([]byte, int, error)
 	Put(string, []byte) ([]byte, int, error)
 }

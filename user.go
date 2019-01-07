@@ -140,7 +140,6 @@ func GetUsers(req Requester, flag string, order string, ascending bool, page int
 		flag = "active"
 	}
 	endpoint := fmt.Sprintf("/admin/users/list/%s.json?order=%s&ascending=%s&page=%d&show_emails=%s", flag, order, strconv.FormatBool(ascending), page, strconv.FormatBool(show_emails))
-	fmt.Println(endpoint)
 	body, _, err := req.GetAsAdmin(endpoint)
 	if err != nil {
 		return nil, err

@@ -3,6 +3,7 @@ package godisco
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 )
 
 // UserResponse define json response
@@ -138,8 +139,9 @@ func GetUsers(req Requester, flag string, order string, ascending bool, page int
 	if flag == "" {
 		flag = "active"
 	}
-	endpoint := fmt.Sprintf("/admin/users/list/%s.json", flag)
-	body, _, err := req.Get(endpoint)
+	endpoint := fmt.Sprintf("/admin/users/list/%s.json?order=%s&ascending=%s&page=%d&show_emails=%s", flag, order, strconv.FormatBool(ascending), page, strconv.FormatBool(show_emails))
+	fmt.Println(endpoint)
+	body, _, err := req.GetAsAdmin(endpoint)
 	if err != nil {
 		return nil, err
 	}

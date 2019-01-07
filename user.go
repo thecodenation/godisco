@@ -96,6 +96,7 @@ type user struct {
 	Active    bool   `json:"active"`
 	Approved  bool   `json:"approved"`
 	Moderator bool   `json:"moderator"`
+	Admin     bool   `json:"admin"`
 }
 
 type invite struct {
